@@ -124,6 +124,14 @@ public class MainActivity extends AppCompatActivity {
             getBurseFromJson();
         });
 
+        SharedPreferences shp = getSharedPreferences("local",MODE_PRIVATE);
+        SharedPreferences.Editor editor = shp.edit();
+        editor.putString("token","ceva");
+        editor.apply();
+
+        String token = shp.getString("token","ceva");
+        Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
