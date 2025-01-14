@@ -91,7 +91,10 @@ public class AddBursa extends AppCompatActivity {
             finish();
 
         });
-
+        
+        SharedPreferences shp = getSharedPreferences("local",MODE_PRIVATE);
+        String token = shp.getString("token","ceva");
+        Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
 
     }
 }
