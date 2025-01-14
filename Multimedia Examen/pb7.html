@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- (3p) Adăugați în codul HTML al paginii un element de tip <canvas>, un element de tip <svg> și un element de tip <img> în care se va afișa fișierul „photo.jpg” din directorul „media”.
+            (3p) Scrieți codul care va afișa pe canvas imaginea în care au fost înlocuite liniile impare cu o culoare la alegere.
+            (3p) Adăugați în cadrul elementului de tip svg un cerc. La click pe cerc se va asigura modificarea coordonatelor acestuia cu o valoare la alegere."-->
+
+    <canvas id="cnv" width="500" height="500"></canvas>
+    <svg id="svg" style="border: 2px solid red"></svg>
+    <img id="img" src="../pisica.jpg" alt="" />
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const svg = document.getElementById("svg");
+      const img = document.getElementById("img");
+
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+
+        for (let i = 0; i < canvas.width; i++) {
+          if (i % 2 != 0) {
+            for (let j = 0; j < canvas.height; j++) {
+              const index = (i * canvas.height + j) * 4;
+
+              data[index] = 0;
+              data[index + 1] = 255;
+              data[index + 2] = 0;
+            }
+          }
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      img.addEventListener("load", () => {
+        draw();
+      });
+
+      const circle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      circle.setAttributeNS(null, "r", 20);
+      circle.setAttributeNS(null, "cx", 20);
+      circle.setAttributeNS(null, "cy", 20);
+
+      svg.appendChild(circle);
+
+      circle.addEventListener("click", () => {
+        circle.setAttributeNS(null, "cx", 30);
+        circle.setAttributeNS(null, "cy", 50);
+      });
+    </script>
+  </body>
+</html>

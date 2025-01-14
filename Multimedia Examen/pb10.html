@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- (3p) Adăugați în codul HTML al paginii un element de tip <svg>, un element de tip <audio> și un <canvas>. Se va asigura afișarea interfeței pentru controlul fișierului audio disponibilă implicit în browser. 
+8.	             (3p) Desenați un dreptunghi de culoare roșie în colțul dreapta jos al elementului svg. Dreptunghiul își va modifica culoarea atunci când cursorul mouse-ului se găsește deasupra sa.
+9.	              (3p) Afișați pe canvas durata fișierului audio cu un font la alegere.-->
+
+    <svg height="200" id="svg" style="border: 2px solid green"></svg>
+    <canvas
+      id="cnv"
+      width="300"
+      height="300"
+      style="border: 2px solid green"
+    ></canvas>
+    <audio id="audio" controls="controls" src="../MeGustasTu.mp3"></audio>
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const audio = document.getElementById("audio");
+      const svg = document.getElementById("svg");
+
+      const ctx = canvas.getContext("2d");
+
+      const rect = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      svg.appendChild(rect);
+
+      rect.setAttributeNS(null, "x", svg.width.animVal.value - 100);
+      rect.setAttributeNS(null, "y", svg.height.animVal.value - 50);
+      rect.setAttributeNS(null, "width", 100);
+      rect.setAttributeNS(null, "height", 50);
+      rect.style = "fill:red";
+
+      rect.addEventListener("mouseenter", () => {
+        rect.style = "fill:blue";
+      });
+
+      rect.addEventListener("mouseleave", () => {
+        rect.style = "fill:red";
+      });
+
+      audio.addEventListener("loadedmetadata", () => {
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          `${audio.duration} seconds`,
+          canvas.width / 2,
+          canvas.height / 2
+        );
+      });
+
+      console.log(audio);
+    </script>
+  </body>
+</html>

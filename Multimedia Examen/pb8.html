@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--"(3p) Adăugați în codul HTML al paginii un element de tip <svg>, un element de tip <audio> și un <canvas>. Se va asigura afișarea interfeței pentru controlul fișierului audio disponibilă implicit în browser.
+            (3p) Adăugați un contur în jurul elementului de tip canvas. La click pe jumătatea stânga a canvas-ului se va începe redarea fișierului audio. La click pe jumătatea din dreapta a canvas-ului se va trece elementul audio în starea de pauză.
+            (3p) Adăugați utilizând JavaScript un dreptunghi în cadrul elementului svg. Dreptunghiul își va schimba culoarea în funcție de starea elementului audio (play / pauză). Culoarea se va modifica și în situația în care redarea fișierului se realizează cu ajutorul interfeței disponibile implicit în browser." -->
+
+    <svg id="svg" style="border: 2px solid red"></svg>
+    <audio id="audio" src="../MeGustasTu.mp3" controls="controls"></audio>
+    <canvas id="cnv" width="500" height="500"></canvas>
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const svg = document.getElementById("svg");
+      const audio = document.getElementById("audio");
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "blue";
+      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+      canvas.addEventListener("click", (e) => {
+        const x = e.offsetX;
+        const y = e.offsetY;
+        if (x < canvas.height / 2) {
+          audio.play();
+          rect.style = "fill:green";
+        } else {
+          audio.pause();
+          rect.style = "fill:red";
+        }
+      });
+
+      const rect = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      rect.setAttributeNS(null, "x", 20);
+      rect.setAttributeNS(null, "y", 20);
+      rect.setAttributeNS(null, "width", 200);
+      rect.setAttributeNS(null, "height", 400);
+      rect.style = "fill:black";
+      svg.appendChild(rect);
+    </script>
+  </body>
+</html>

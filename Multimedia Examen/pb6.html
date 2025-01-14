@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- (3p) Adăugați în codul HTML al paginii un element de tip <canvas>
+       și un element de tip <img> în care se va afișa fișierul „photo.jpg” din directorul „media”.
+      (3p) Scrieți o funcție care primește doi parametrii, primul de
+       tipul HTMLImageElement, iar al doilea o valoare intre 0 si 255.
+        Funcția transforma imaginea inițiala într-o imagine alb-negru prin compararea mediei
+        valorilor pe canalele RGB pentru fiecare pixel cu valoarea celui de-al doilea parametru.
+         Imaginea rezultata va fi afișată pe canvas la coordonatele (0,0).
+      (3p) Desenați un dreptunghi plin cu o culoare la alegere în mijlocul canvas-ului." -->
+
+    <canvas
+      id="cnv"
+      width="500"
+      height="500"
+      style="border: 2px solid red"
+    ></canvas>
+    <img id="img" src="../pisica.jpg" alt="" />
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const img = document.getElementById("img");
+
+      const ctx = canvas.getContext("2d");
+
+      function draw(img, val) {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+
+          const medie = (r + g + b) / 3;
+          //   let index = (j * canvas.width + i) * 4;
+
+          const valNoua = medie > val ? 255 : 0;
+          data[i] = valNoua;
+          data[i + 1] = valNoua;
+          data[i + 2] = valNoua;
+        }
+        ctx.putImageData(imgData, 0, 0);
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(canvas.width / 2, canvas.height / 2, 70, 50);
+      }
+      img.addEventListener("load", () => {
+        draw(img, 128);
+      });
+    </script>
+  </body>
+</html>

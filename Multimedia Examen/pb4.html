@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- "(3p) Adăugați în codul HTML al paginii un element de tip <canvas> și un element de tip <video>.
+             Se va asigura afișarea interfeței pentru controlul fișierului video disponibilă implicit în browser.
+            (3p) Modificați aplicația dezvoltată, astfel încât la click pe un buton să se asigure revenirea cu 10s în cadrul fișierului video.
+            (3p) Afișați pe canvas video-ul în tonuri de gri." -->
+
+    <canvas
+      id="cnv"
+      width="300"
+      height="300"
+      style="border: 2px solid red; filter: grayscale()"
+    ></canvas>
+
+    <video src="../Bebe.mp4" id="video" controls="controls"></video>
+
+    <button id="btn">Revenire 10s</button>
+
+    <svg>
+      <g>
+        <rect x="10" y="10" height="50" width="50" stroke="red"></rect>
+      </g>
+    </svg>
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const video = document.getElementById("video");
+      const btn = document.getElementById("btn");
+
+      const ctx = canvas.getContext("2d");
+
+      btn.addEventListener("click", () => {
+        video.currentTime -= 1;
+      });
+
+      function draw() {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        requestAnimationFrame(draw);
+      }
+      video.addEventListener("loadedmetadata", () => {
+        draw();
+      });
+    </script>
+  </body>
+</html>

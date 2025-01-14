@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+  (3p) Adăugați în codul HTML al paginii un element de tip <canvas> și un element de tip <video>.
+       Se va asigura afișarea interfeței pentru controlul fișierului video disponibilă implicit în browser.
+  (3p) Afișați în permanență cu ajutorul unui element de tip span momentul curent de timp aferent elementului video.
+  (3p) Afișați în permanență pe canvas video-ul. În centrul elementului video se va desena adresa de la care a fost încărcat fișierul video.
+  -->
+    <canvas
+      id="cnv"
+      width="400"
+      height="400"
+      style="border: 2px solid red"
+    ></canvas>
+
+    <video id="video" controls="'controls" src="../Bebe.mp4"></video>
+
+    <span id="spanTime">XXX</span>
+    <script>
+      const canvas = document.getElementById("cnv");
+      const video = document.getElementById("video");
+      const span = document.getElementById("spanTime");
+
+      const ctx = canvas.getContext("2d");
+
+      video.addEventListener("timeupdate", () => {
+        span.innerText = video.currentTime;
+      });
+
+      function draw() {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        ctx.fillText(video.src, canvas.width / 2, canvas.height / 2);
+        ctx.textAlign = "center";
+
+        requestAnimationFrame(draw);
+      }
+
+      video.addEventListener("loadedmetadata", () => {
+        draw();
+      });
+    </script>
+  </body>
+</html>

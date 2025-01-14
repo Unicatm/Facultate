@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- ]
+            (3p) Adăugați în codul HTML al paginii un element de tip <svg>, un element de tip <audio> și un <canvas>.
+                Se va asigura afișarea interfeței pentru controlul fișierului audio disponibilă implicit în browser.
+                (3p) La rularea fișierului audio se va afișa în elementul de tip svg un dreptunghi.
+                La trecerea elementului audio în modul pauză se va afișa în svg un element de tip cerc.
+                Cercul / dreptunghiul se vor afișa și în situația în care redarea fișierului se realizează cu ajutorul interfeței disponibile implicit în browser.
+                 (3p) La click pe jumătatea de sus a canvas-ului se va începe redarea fișierului audio. La click pe jumătatea de jos a canvas-ului se va trece elementul în modul pauză.
+-->
+    <svg id="svg" style="border: 2px solid green"></svg>
+    <audio id="audio" src="../MeGustasTu.mp3" controls></audio>
+    <canvas
+      id="canvas"
+      width="500"
+      height="500"
+      style="border: 2px solid red"
+    ></canvas>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const audio = document.getElementById("audio");
+      const svg = document.getElementById("svg");
+
+      const ctx = canvas.getContext("2d");
+
+      const rect = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      rect.setAttributeNS(null, "x", 20);
+      rect.setAttributeNS(null, "y", 20);
+      rect.setAttributeNS(null, "width", 100);
+      rect.setAttributeNS(null, "height", 150);
+      //   svg.appendChild(rect);
+
+      const circle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      circle.setAttributeNS(null, "cx", 100);
+      circle.setAttributeNS(null, "cy", 100);
+      circle.setAttributeNS(null, "r", 10);
+
+      canvas.addEventListener("click", (e) => {
+        if (e.offsetY > canvas.height / 2) {
+          audio.pause();
+        } else {
+          audio.play();
+        }
+      });
+
+      audio.addEventListener("play", () => {
+        rect.style = "fill:red";
+        svg.appendChild(rect);
+      });
+
+      audio.addEventListener("pause", () => {
+        circle.style = "fill:blue";
+        svg.appendChild(circle);
+      });
+    </script>
+  </body>
+</html>

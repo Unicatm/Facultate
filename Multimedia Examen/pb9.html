@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- "Notă: Rezolvările se vor puncta doar dacă rulează fără erori.
+        (3p) Adăugați în codul HTML al paginii un element de tip <canvas> și un element de tip <img> în
+     care se va afișa fișierul „photo.jpg” din directorul „media”.
+        (3p) Declarați funcția „processImage"" care primește un parametru de tip HTMLImageElement și
+        un parametru de tip HTMLCanvasElement. Funcția afișează imaginea în tonuri de gri pe canvas la coordonatele (0,0).
+         Funcția va fi apelată la click pe un buton. Notă: imaginea prelucrată se va afișa pe canvas la dimensiuni
+         identice cu cele ale imaginii inițiale.
+        (3p) Afișați prenumele propriu în mijlocul elementului de tip canvas." -->
+
+    <canvas id="cnv" style="border: 2px solid red"></canvas>
+    <img id="img" src="../pisica.jpg" />
+    <button id="btn">Click</button>
+
+    <script>
+      const canvas = document.getElementById("cnv");
+      const img = document.getElementById("img");
+      const btn = document.getElementById("btn");
+
+      canvas.setAttribute("width", img.getAttribute("width"));
+      canvas.setAttribute("height", img.getAttribute("height"));
+
+      const ctx = canvas.getContext("2d");
+
+      function draw(image, can) {
+        ctx.drawImage(image, 0, 0, can.width, can.height);
+
+        const dataImg = ctx.getImageData(0, 0, can.width, can.height);
+        const data = dataImg.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+
+          let media = (r + g + b) / 3;
+
+          const val = media > 128 ? 255 : 0;
+
+          data[i] = val;
+          data[i + 1] = val;
+          data[i + 2] = val;
+        }
+
+        ctx.putImageData(dataImg, 0, 0);
+      }
+
+      btn.addEventListener("click", () => {
+        draw(img, canvas);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "red";
+        ctx.fillText("Alexandra", canvas.width / 2, canvas.height / 2);
+      });
+    </script>
+  </body>
+</html>
